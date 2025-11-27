@@ -20,8 +20,7 @@ clean: down
 	docker system prune -a
 
 fclean: clean
-	rm -rf $(WORDPRESS) $(MARIADB);
-	
+ docker run --rm -v /home/$(LOGIN)/data:/data alpine sh -c "rm -rf /data/*"	
 
 re: fclean all
 
