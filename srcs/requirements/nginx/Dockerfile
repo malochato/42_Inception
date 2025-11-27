@@ -11,8 +11,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 RUN mkdir -p /var/www/html
 
-COPY conf/index.html /var/www/html/index.html
-
 COPY conf/nginx.conf /etc/nginx/http.d/default.conf
 
 CMD ["nginx" ,"-g" ,"daemon off;"]

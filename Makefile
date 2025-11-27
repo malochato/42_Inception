@@ -14,10 +14,10 @@ all:
 
 
 down: 
-#	docker-compose -f $(SRCS) down
+	docker-compose -f $(SRCS) down
 
 clean: down
-#	docker system prune -a
+	docker system prune -a
 
 fclean: clean
 	rm -rf $(WORDPRESS) $(MARIADB);
