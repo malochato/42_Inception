@@ -2,9 +2,9 @@
 
 # 1. Attente de la base de données (optionnel mais robuste)
 # On essaie de se connecter à MariaDB tant que ça ne marche pas
-# while ! mariadb -h mariadb -u $SQL_USER -p$SQL_PASSWORD $SQL_DATABASE &>/dev/null; do
-#     sleep 3
-# done
+while ! mariadb -h mariadb -u $SQL_USER -p$SQL_PASSWORD $SQL_DATABASE &>/dev/null; do
+    sleep 3
+done
 
 # 2. Installation de WordPress
 # On vérifie si wp-config.php existe pour ne pas réinstaller à chaque redémarrage
