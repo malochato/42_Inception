@@ -14,7 +14,8 @@ RUN apk update && apk add --no-cache \
 	php-zip \
 	wget \
 	unzip \
-	mariadb-client
+	mariadb-client \
+	php-redis
 
 
 RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php*/php.ini
