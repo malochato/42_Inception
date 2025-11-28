@@ -40,6 +40,7 @@ if [ ! -f ./wp-config.php ]; then
         $WP_EMAIL \
         --role=author \
         --user_pass=$WP_PASSWORD --allow-root
+
 fi
 
 # 3. Lancer PHP-FPM en premier plan
