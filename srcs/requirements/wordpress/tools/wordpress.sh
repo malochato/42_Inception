@@ -2,6 +2,7 @@
 set -e
 
 SQL_PASSWORD=$(cat /run/secrets/db_password)
+echo "SQL Password: $SQL_PASSWORD"
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 
 
