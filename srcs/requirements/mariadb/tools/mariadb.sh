@@ -1,11 +1,8 @@
 #!/bin/sh
 set -e
 
-# Expected environment variables:
-#   SQL_DATABASE
-#   SQL_USER
-#   SQL_PASSWORD
-#   SQL_ROOT_PASSWORD
+SQL_PASSWORD=$(cat /run/secrets/db_password)
+SQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
 
 DB_DIR="/var/lib/mysql"
 MYSQL_SYSTEM_DIR="$DB_DIR/mysql"

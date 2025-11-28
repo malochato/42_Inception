@@ -1,5 +1,9 @@
 #!/bin/sh
 
+SQL_PASSWORD=$(cat /run/secrets/db_password)
+WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
+
+
 # 1. Attente de la base de données (optionnel mais robuste)
 # On essaie de se connecter à MariaDB tant que ça ne marche pas
 while ! mariadb -h mariadb -u $SQL_USER -p$SQL_PASSWORD $SQL_DATABASE &>/dev/null; do

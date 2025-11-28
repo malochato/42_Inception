@@ -1,0 +1,11 @@
+srcs/.env
+
+secrets/
+
+*.key
+*.crt
+*.pem
+
+.DS_Store
+.vscode/
+*.swp
