@@ -20,7 +20,7 @@ clean: down
 	docker system prune -a
 
 fclean: clean
- docker run --rm -v /home/$(LOGIN)/data:/data alpine sh -c "rm -rf /data/*"	
+	sudo rm -rf $(VOLUMES_PATH)
 
 re: fclean all
 
