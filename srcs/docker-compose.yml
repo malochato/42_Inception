@@ -33,7 +33,7 @@ services:
 
   adminer:
     container_name: adminer
-    build: ./requirements/adminer
+    build: ./requirements/bonus/adminer
     image: adminer
     env_file: .env
     depends_on:
