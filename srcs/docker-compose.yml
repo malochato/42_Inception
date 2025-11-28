@@ -49,6 +49,14 @@ services:
     networks:
       - inception
     restart: always
+  
+  website:
+    container_name: website
+    build: ./requirements/bonus/website
+    image: website
+    networks:
+      - inception
+    restart: always
 
   nginx:
     container_name: nginx
