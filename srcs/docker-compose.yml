@@ -14,7 +14,7 @@ services:
     networks:
       - inception
     restart: always
-    
+
   redis:
     container_name: redis
     build: ./requirements/bonus/redis
@@ -65,6 +65,22 @@ services:
       - inception
     restart: always
 
+  ftp:
+    container_name: ftp
+    build: ./requirements/bonus/ftp
+    image: ftp
+    env_file: .env
+    secrets: 
+      - ftp_password
+    volumes:
+      - wordpress_data:/var/www/html
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    networks:
+      - inception
+    restart: always
+
 networks:
   inception:
     driver: bridge
@@ -90,4 +106,6 @@ secrets:
   db_root_password:
     file: ../secrets/db_root_password.txt
   wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  ftp_password:
     file: ../secrets/wp_admin_password.txt
