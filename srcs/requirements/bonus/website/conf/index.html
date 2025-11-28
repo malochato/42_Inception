@@ -1,15 +1,135 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Mon Bonus Inception</title>
-    <style>
-        body { background-color: #2c3e50; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        h1 { color: #e74c3c; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Welcome to 42 Inception</title>
+  <style>
+    :root{
+      --bg:#000;
+      --green:#00ff66;
+      --muted:rgba(0,255,102,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;background:var(--bg);color:var(--green);-webkit-font-smoothing:antialiased}
+
+    canvas#matrix{position:fixed;inset:0;z-index:0;display:block}
+    .stage{position:relative;z-index:2;height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+    .card{width:min(1100px,94%);padding:2.2rem;border-radius:14px;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.2));border:1px solid var(--muted);backdrop-filter:blur(6px);box-shadow:0 18px 60px rgba(0,255,102,0.02)}
+    .title{font-size:clamp(1.8rem,6vw,4rem);margin:0;color:var(--green);letter-spacing:0.04em}
+    .terminal{margin-top:1rem;font-size:1rem;opacity:0.95;display:flex;gap:0.6rem;align-items:center;justify-content:center}
+    .cursor{width:10px;height:18px;background:var(--green);display:inline-block;animation:blink 0.8s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .meta{margin-top:1rem;font-size:0.86rem;color:rgba(0,255,102,0.6)}
+    .vignette{position:fixed;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.45) 100%) }
+    @media (max-width:520px){.card{padding:1rem;border-radius:10px}.terminal{flex-direction:column}}
+  </style>
 </head>
 <body>
-    <h1>Bienvenue sur mon site statique !</h1>
-    <p>Ce site ne contient PAS de PHP.</p>
-    <p>Il est servi par Python dans un conteneur Docker.</p>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+  <div class="stage">
+    <div class="card" role="main" aria-label="Welcome to Inception Bonus">
+      <h1 class="title">Welcome to Inception Bonus</h1>
+      <div class="terminal" aria-hidden="false">
+        <div id="typed">Initializing</div>
+        <div class="cursor" aria-hidden="true"></div>
+      </div>
+	<div class="meta" style="text-align: center;">Running on isolated Python server · Docker container · NGINX reverse-proxy · <strong>NO PHP</strong></div>
+    </div>
+  </div>
+  <div class="vignette"></div>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0, cols = 0, ypos = [];
+    const phrase = "   NO PHP !!!    ";
+
+    function setup(){
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      const fontSize = 20;
+      ctx.font = 'bold ' + fontSize + 'px monospace';
+      cols = Math.floor(W / fontSize) + 1;
+      ypos = new Array(cols).fill(0).map(()=>Math.random() * -H);
+    }
+
+    function matrixLoop(){
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, W, H);
+      
+      ctx.font = 'bold 20px monospace'; 
+      ctx.fillStyle = '#00ff66';
+      ctx.shadowBlur = 0;
+
+      for(let i = 0; i < cols; i++){
+        const x = i * 20;
+        const y = ypos[i];
+        
+        const gridY = Math.floor(y / 20) * 20;
+        
+        if (gridY >= 0) {
+            const charIndex = (gridY / 20) % phrase.length;
+            const char = phrase[charIndex];
+            ctx.fillText(char, x, gridY);
+        }
+        
+        ypos[i] += 4; 
+        
+        if (y > H + 100) {
+             ypos[i] = -200 * Math.random();
+        }
+      }
+      requestAnimationFrame(matrixLoop);
+    }
+    
+    window.addEventListener('resize', ()=>{ setup(); });
+    setup();
+    matrixLoop();
+	
+    const typedEl = document.getElementById('typed');
+    const messages = [
+      'Python server initialized',
+      'Container environment: active',
+      'NGINX reverse proxy: routing traffic',
+      'Absolutely NO PHP involved!',
+      'System stable · Welcome to 42 Inception'
+    ];
+    let mi = 0, ci = 0, dir = 1;
+    function tick(){
+      const msg = messages[mi];
+      typedEl.textContent = msg.slice(0, ci);
+      if(dir === 1){
+        ci++;
+        if(ci > msg.length){ dir = -1; setTimeout(tick, 800); return; }
+      } else {
+        ci--;
+        if(ci < 0){ dir = 1; mi = (mi + 1) % messages.length; ci = 0; }
+      }
+      setTimeout(tick, 60 + Math.random() * 80);
+    }
+    tick();
+
+    const card = document.querySelector('.card');
+    if(card) card.tabIndex = -1;
+    document.body.addEventListener('click', ()=>{
+      document.body.animate([
+        {filter:'brightness(1)'},
+        {filter:'brightness(1.08)'},
+        {filter:'brightness(1)'}
+      ], { duration: 520, easing: 'ease-out' });
+    });
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter'){
+        const flash = document.createElement('div');
+        flash.style.position = 'fixed';
+        flash.style.inset = 0;
+        flash.style.background = 'radial-gradient(circle at 50% 10%, rgba(0,255,102,0.06), rgba(0,255,102,0.02))';
+        flash.style.zIndex = 5;
+        document.body.appendChild(flash);
+        setTimeout(()=> flash.remove(), 220);
+      }
+    });
+  </script>
 </body>
 </html>
