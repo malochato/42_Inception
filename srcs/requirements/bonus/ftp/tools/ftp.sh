@@ -1,14 +1,10 @@
 #!/bin/sh
 
 FTP_PASSWORD=$(cat /run/secrets/ftp_password)
-elif [ -z "$FTP_PASSWORD" ]; then
-    echo "Error: FTP password not found in secrets or env!"
-    exit 1
-fi
 
 if [ -z "$FTP_USER" ]; then
-    echo "FTP_USER is not set!"
-    exit 1
+    echo "FTP_USER is not set, default: \"ftpuser\"!"
+	FTP_USER="ftpuser"
 fi
 
 if ! id "$FTP_USER" >/dev/null 2>&1; then
