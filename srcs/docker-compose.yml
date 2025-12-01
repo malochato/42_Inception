@@ -89,6 +89,16 @@ services:
       - inception
     restart: always
 
+  glances:
+    container_name: glances
+    build: ./requirements/bonus/glances
+    image: glances
+    networks:
+      - inception
+    restart: always
+    ports:
+      - "61208:61208"
+
 networks:
   inception:
     driver: bridge
