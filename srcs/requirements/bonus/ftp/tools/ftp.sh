@@ -7,6 +7,8 @@ if [ -z "$FTP_USER" ]; then
 	FTP_USER="ftpuser"
 fi
 
+mkdir -p /var/www/html
+
 if ! id "$FTP_USER" >/dev/null 2>&1; then
     echo "Creating FTP user: $FTP_USER"
     adduser -D -h /var/www/html $FTP_USER
