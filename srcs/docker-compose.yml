@@ -58,20 +58,6 @@ services:
       - inception
     restart: always
 
-  cadvisor:
-    container_name: cadvisor
-    build: ./requirements/bonus/cadvisor
-    image: cadvisor
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /:/rootfs:ro
-      - /var/run:/var/run:ro
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    networks:
-      - inception
-    restart: always
-
   nginx:
     container_name: nginx
     build: ./requirements/nginx
