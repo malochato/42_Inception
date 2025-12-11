@@ -17,7 +17,7 @@ services:
 
   redis:
     container_name: redis
-    build: ./requirements/bonus/redis
+    build: ./bonus/redis
     image: redis
     networks:
       - inception
@@ -33,6 +33,7 @@ services:
       - wp_admin_password
     depends_on:
       - mariadb
+      - redis
     volumes:
       - wordpress_data:/var/www/html
     networks:
@@ -41,7 +42,7 @@ services:
 
   adminer:
     container_name: adminer
-    build: ./requirements/bonus/adminer
+    build: ./bonus/adminer
     image: adminer
     env_file: .env
     depends_on:
@@ -52,7 +53,7 @@ services:
   
   website:
     container_name: website
-    build: ./requirements/bonus/website
+    build: ./bonus/website
     image: website
     networks:
       - inception
@@ -75,7 +76,7 @@ services:
 
   ftp:
     container_name: ftp
-    build: ./requirements/bonus/ftp
+    build: ./bonus/ftp
     image: ftp
     env_file: .env
     secrets: 
@@ -91,7 +92,7 @@ services:
 
   glances:
     container_name: glances
-    build: ./requirements/bonus/glances
+    build: ./bonus/glances
     image: glances
     networks:
       - inception

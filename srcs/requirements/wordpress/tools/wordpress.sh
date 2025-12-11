@@ -10,6 +10,10 @@ while ! mariadb -h mariadb -u $SQL_USER -p$SQL_PASSWORD $SQL_DATABASE &>/dev/nul
     sleep 3
 done
 
+
+echo "MariaDB is responding, waiting for full startup..."
+sleep 10 
+
 if [ ! -f ./wp-config.php ]; then
     
     wp core download --allow-root
@@ -38,14 +42,14 @@ fi
 if ! wp plugin is-installed redis-cache --allow-root; then
     echo "Installing Redis Cache plugin..."
     wp plugin install redis-cache --activate --allow-root
-    
-    wp plugin update --all --allow-root
-    
-    wp config set WP_REDIS_HOST redis --allow-root
-    wp config set WP_REDIS_PORT 6379 --allow-root
-    
-    wp redis enable --allow-root
 fi
+
+wp plugin update --all --allow-root
+wp config set WP_REDIS_HOST redis --allow-root
+wp config set WP_REDIS_PORT 6379 --allow-root
+
+wp redis enable --allow-root || true
+
 echo "➡️ Redis is ready..."
 echo "➡️ WordPress is running..."
 exec php-fpm83 -F
