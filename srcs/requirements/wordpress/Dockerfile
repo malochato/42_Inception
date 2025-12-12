@@ -12,6 +12,12 @@ RUN apk update && apk add --no-cache \
 	php-openssl \
 	php-xml \
 	php-zip \
+	php-tokenizer \
+	php-session \
+    php-iconv \
+    php-ctype \
+    php-dom \
+    php-simplexml \
 	wget \
 	unzip \
 	mariadb-client \

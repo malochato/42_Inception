@@ -4,6 +4,7 @@ set -e
 SQL_PASSWORD=$(cat /run/secrets/db_password)
 echo "SQL Password: $SQL_PASSWORD"
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
+WP_PASSWORD=$(cat /run/secrets/wp_user_password)
 
 
 while ! mariadb -h mariadb -u $SQL_USER -p$SQL_PASSWORD $SQL_DATABASE &>/dev/null; do
@@ -49,7 +50,10 @@ wp config set WP_REDIS_HOST redis --allow-root
 wp config set WP_REDIS_PORT 6379 --allow-root
 
 wp redis enable --allow-root || true
+wp config set WP_DEBUG true --raw --allow-root
 
 echo "➡️ Redis is ready..."
 echo "➡️ WordPress is running..."
+
+chown -R nobody:nobody /var/www/html
 exec php-fpm83 -F
