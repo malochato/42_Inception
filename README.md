@@ -1,70 +1,81 @@
-This project has been created as part of the 42 curriculum by malde-ch
+# INCEPTION
 
+This project was created as part of the 42 curriculum by **malde-ch**.
 
-Description:
-Le but de ce projet est de mettre en place un LEMP stack, en utilisant en plus la technologie des containers. 
-A LEMP stack est un facon de host des site web, il est composer par les element suivant:
-L --> Linux (OS), dans notre cas Alpine
-E --> Nginx, prononcer engine X (Web server).
-M --> Maria DB (database)
-P --> PHP -fpm (scripting language)
+## Description
 
+The goal of this project is to set up a **LEMP stack** using containerization technology. A LEMP stack is a bundle of software used to host websites, composed of the following elements:
 
+*   **L** → Linux (OS) - *Alpine Linux* in our case.
+*   **E** → Nginx (pronounced Engine-X) - *Web Server*.
+*   **M** → MariaDB - *Database*.
+*   **P** → PHP - *Scripting Language*.
 
-Dans ce projet, la containerisation avec Docker permet d'encapsuler l’application et ses dépendances dans des conteneurs légers et isolés, basés sur des images réutilisables.
-Docker Compose facilite la définition et le lancement d’ensembles multi‑conteneurs via un fichier docker‑compose.yml en orchestrant la création des services, des réseaux, des volumes et les commandes de cycle de vie (up/down). 
-Le réseau bridge, utilisé par défaut, fournit un pont isolé entre conteneurs sur un même hôte, autorisant la communication interne par nom de service tout en contrôlant le mappage des ports vers l’hôte. 
-Enfin, les volumes Docker offrent une persistance des données gérée par Docker, stockant les données hors du cycle de vie d’un conteneur et constituant une solution plus sûre et portable que les bind mounts, notamment pour les bases de données.
+In this project, we also learn about Docker who allows the application and its dependencies to be encapsulated in lightweight, isolated containers based on reusable images.
 
+**Docker Compose** simplifies the definition and launch of multi-container environments via a `docker-compose.yml` file by orchestrating services, networks, volumes, and lifecycle commands (up/down).
 
-Instructions:
-Pour lancer le projet, plusieurs etapes doivent etre faites:
-- creer le fichier .env avec toutes les varaibles d'environement
-- un dossier Secret, avec les fichiers necessaires par les differents containers pour faire fonctionner les services. 
-Et enfin pour tout lancer rien de plus simple que simplement faire un Make. 
+*   **Networking:** The default bridge network provides an isolated bridge between containers on the same host, allowing internal communication by service name while controlling port mapping to the host.
+*   **Storage:** Docker volumes offer data persistence managed by Docker, storing data outside the container lifecycle. This is safer and more portable than bind mounts, especially for databases.
 
+---
 
+## Instructions
 
-Comparaisons rapides:
-- Virtual Machines vs Docker
-    - VM : isolation complète du kernel, plus lourde, démarrage lent, bonne pour isolation forte.
-    - Docker : isolation par conteneur plus légère, démarrage rapide, idéal pour microservices et dev/test ; moins d’isolation kernel-level (donc moins de securite notament).
+To launch the project, follow these steps:
 
-- Secrets vs Environment Variables
-    - Secrets : stockage chiffré et injection contrôlée, évitent d’exposer les valeurs dans l’historique ou dans des logs, recommandés pour mots de passe.
-    - Env vars : pratiques pour configuration légère, mais faciles à fuir (process list, logs, .env files), à éviter pour secrets critiques.
+1.  Create a `.env` file with all required environment variables.
+2.  Create a `secrets` directory containing the keys/files necessary for the different containers to operate.
+3.  Launch the stack using Make:
+    ```bash
+    make
+    ```
 
-- Docker Network vs Host Network
-    - Bridge / overlay : isolation par défaut entre conteneurs, NAT pour l’accès externe et mappage de ports contrôlé. Overlay permet la communication multi‑hôte (orchestration). Bon compromis sécurité/portabilité, recommandé pour la plupart des déploiements.
-    - Host : le conteneur partage la pile réseau de l’hôte (pas de NAT ni de mappage), latence et débit natifs, utile pour besoins de performance ou d’accès bas‑niveau au réseau. Réduit fortement l’isolation, risque de conflits de ports et d’exposition des services.
+---
 
-- Docker Volumes vs Bind Mounts
-    - Volumes Docker : gérés par Docker, portables, meilleurs pour persistance de données (BD), permissions gérées, backup/restore plus simple.
-    - Bind mounts : lient un répertoire hôte au container (utile en dev pour rechargement de code), moins portable et potentiel risque de mismatch de permissions.
-    
+## Quick Comparisons
 
+### Virtual Machines vs. Docker
+*   **VM:** Complete kernel isolation, heavier, slower startup. Good for strong isolation.
+*   **Docker:** Lighter container-based isolation, fast startup. Ideal for microservices and dev/test environments; less kernel-level isolation (potentially less secure).
 
+### Secrets vs. Environment Variables
+*   **Secrets:** Encrypted storage and controlled injection. Avoids exposing values in history or logs. Recommended for passwords.
+*   **Env Vars:** Convenient for configuration but prone to leaks (process lists, logs, `.env` files). Avoid for critical secrets.
 
+### Docker Network vs. Host Network
+*   **Bridge / Overlay:** Default isolation between containers, uses NAT for external access, and controlled port mapping. Overlay allows multi-host communication. Good security/portability compromise.
+*   **Host:** The container shares the host's networking stack (no NAT or mapping). Native latency and throughput, useful for performance or low-level network access. Significantly reduces isolation and increases the risk of port conflicts and service exposure.
 
-Ressources: 
+### Docker Volumes vs. Bind Mounts
+*   **Docker Volumes:** Managed by Docker, portable, better for data persistence (DB), managed permissions, simpler backup/restore.
+*   **Bind Mounts:** Links a host directory to the container (useful in dev for code reloading). Less portable and carries a potential risk of permission mismatch.
 
-Docker:
-    -https://www.youtube.com/watch?v=pg19Z8LL06w
-    -https://docs.docker.com/manuals/
-    -https://docs.docker.com/compose/
+---
 
-Nginx:
-    -https://www.cyberciti.biz/faq/how-to-install-nginx-web-server-on-alpine-linux/
+## Resources
 
-Wordpress:
-    -https://wp-cli.org/
-    -https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose
+### Docker
+*   [Docker Video Tutorial](https://www.youtube.com/watch?v=pg19Z8LL06w)
+*   [Docker Manuals](https://docs.docker.com/manuals/)
+*   [Docker Compose Documentation](https://docs.docker.com/compose/)
 
-Maria DB:
-    -https://mariadb.com/docs/server/server-management/automated-mariadb-deployment-and-administration/docker-and-mariadb/installing-and-using-mariadb-via-docker
-    -https://www.ionos.ca/digitalguide/hosting/technical-matters/mariadb-docker/
+### Nginx
+*   [Install Nginx on Alpine Linux](https://www.cyberciti.biz/faq/how-to-install-nginx-web-server-on-alpine-linux/)
 
-    AI:
-De plus dans ce projet j'ai utilise l'IA principlaement pour deux aspects: 
-    - Le premier du Debug, l'IA m'a permis de comprendre pourquoi les differents services n'arrivaient pas a fonctionner ensemble, pour cela j'ai pu donner les input suivant: les logs des containers, mais aussi les fichier des conf des containers. 
-    - Secondement, l'IA m'a permis d'appronfondir les differentes question que j'avais par rraport au differents servieces que je mettais en place, notament dans les services bonus. 
+### Wordpress
+*   [WP-CLI](https://wp-cli.org/)
+*   [Install WordPress with Docker Compose](https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose)
+
+### MariaDB
+*   [Installing MariaDB via Docker](https://mariadb.com/docs/server/server-management/automated-mariadb-deployment-and-administration/docker-and-mariadb/installing-and-using-mariadb-via-docker)
+*   [MariaDB Docker Guide](https://www.ionos.ca/digitalguide/hosting/technical-matters/mariadb-docker/)
+
+---
+
+## AI Usage
+
+For this project, I used AI primarily for two aspects:
+
+*   **Debugging:** AI helped me understand why different services failed to work together. I provided inputs such as container logs and configuration files to identify issues.
+*   **Deep Dive:** AI allowed me to deepen my understanding of the various services I was implementing, particularly regarding the bonus services.
