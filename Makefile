@@ -10,11 +10,11 @@ MARIADB = /home/$(LOGIN)/data/mariadb
 all: 
 	mkdir -p $(WORDPRESS)
 	mkdir -p $(MARIADB)
-	docker-compose -f $(SRCS) up --build -d
+	docker compose -f $(SRCS) up --build -d
 
 
 down: 
-	docker-compose -f $(SRCS) down
+	docker compose -f $(SRCS) down
 
 clean: down
 	docker system prune -a
